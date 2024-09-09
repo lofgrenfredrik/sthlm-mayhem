@@ -12,7 +12,6 @@ export default function Competition() {
   useEffect(() => {
     // Call the listener function and update state with Firestore data
     const unsubscribe = listenToFirestoreChanges("test", (updatedData) => {
-      console.log(updatedData, "<----updatedData");
       setData(updatedData);
     });
 
@@ -20,28 +19,15 @@ export default function Competition() {
     return () => unsubscribe();
   }, []);
 
-
-  console.log(data,"<----data")
-
   return (
     <div className="flex justify-center items-center w-screen h-screen flex-col relative">
       <h1 className="text-6xl">Mayhem competition</h1>
       <ul>
         {data.map((item) => {
-          const timer= item.time*60000;
-
-          console.log(timer, "<----timer")
-
           return ( <li key={item.id}>
             {item.text} - {item.time}min
             <Countdown
-              date={Date.now() + timer}
-              intervalDelay={0}
-              precision={3}
-              renderer={props => <div>{props.minutes}:{props.seconds}</div>}
-            />
-            <Countdown
-              date={item.date}
+              date={item.time}
               intervalDelay={0}
               precision={3}
               renderer={props => <div>{props.minutes}:{props.seconds}</div>}
