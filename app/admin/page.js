@@ -10,7 +10,7 @@ export default function Admin() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const timeDate = new Date().getTime() + (date*60000);
+        const timeDate = new Date().getTime() + (time*60000);
         try {
             const docRef = await addDoc(collection(db, "test"), {
                 text: value,
