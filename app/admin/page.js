@@ -10,10 +10,11 @@ export default function Admin() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const timeDate = new Date().getTime() + (date*60000);
         try {
             const docRef = await addDoc(collection(db, "test"), {
                 text: value,
-                time: time
+                time: timeDate,
             });
             console.log("Document written with ID: ", docRef.id);
             setValue(''); // Clear the form
@@ -24,20 +25,20 @@ export default function Admin() {
   return (
     <div className="flex justify-center items-center w-screen h-screen flex-col">
       <h1 className="text-6xl">Admin</h1>
-              <form onSubmit={handleSubmit}>
+              <form className="flex justify-center items-center w-full h-full flex-col text-black" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    placeholder="Add a new item"
+                    placeholder="text"
                 />
                 <input
                     type="text"
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
-                    placeholder="Add a new item"
+                    placeholder="minutes"
                 />
-            <button type="submit">Add Item</button>
+            <button className='bg-slate-200' type="submit">Add Item</button>
         </form>
     </div>
   )
