@@ -2,14 +2,18 @@
 
 import { useState } from 'react';
 import {db} from '../../lib/firestore';
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { count, doc, setDoc } from "firebase/firestore";
 
 export default function Admin() {
     const [time, setTime] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const timeDate = new Date().getTime() + (time*60000);
+        const now = new Date()
+        const countdownTime = 10000
+        const timePadding = 9000
+        const timeDate = now.getTime() + (time*60000) + timePadding;
+        const countdown = now.getTime() + countdownTime;
 
         try {
         // Define a predefined document ID here
@@ -19,6 +23,7 @@ export default function Admin() {
         // Use setDoc instead of addDoc
         await setDoc(docRef, {
             time: timeDate,
+            countdown: countdown
         });
 
         console.log("Document written with predefined ID: ", predefinedDocId);
