@@ -1,28 +1,33 @@
 export const dynamic = 'force-dynamic';
-import { listenToFirestoreChanges } from "../../../lib/firestoreListener"
+import {db} from '../../../lib/firestore';
+import { doc, getDoc } from "firebase/firestore";
 
-
-
-export function GET(request: Request) {
-      const url = new URL(request.url);
-      const params = new URLSearchParams(url.search);
+export async function GET(request: Request) {
       const now = new Date();
+      let timerDate = new Date()
+      let countdownDate = new Date()
 
-      console.log(params)
+        const predefinedDocId = "mayhem-timer";  // replace this with your actual ID
+        const docRef = doc(db, "lambda", predefinedDocId);
 
-      const countdownTimestamp = params.get('countdownTimestamp');
-      const countdownDate = new Date(parseInt(countdownTimestamp, 10))
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const {time, countdown} = docSnap.data();
+          timerDate = new Date(time)
+          countdownDate = new Date(countdown)
+        } else {
+          console.log("No such document in database!");
+        }
+
       const countdownLeft = countdownDate.getTime() - now.getTime();
       let countdownSeconds = Math.floor((countdownLeft / 1000) % 60);
 
       if (countdownSeconds <= 0) {
         countdownSeconds = 0;
       }
-      console.log(countdownSeconds, "<--- countdownSeconds")
 
-      const timerTimestamp = params.get('timerTimestamp');
-      const targetDate = new Date(parseInt(timerTimestamp, 10))
-      const timeLeft = targetDate.getTime() - now.getTime();
+      const timeLeft = timerDate.getTime() - now.getTime();
       const seconds = Math.floor((timeLeft / 1000) % 60);
       const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
       const padWithZero = (num: number) => String(num).padStart(2, '0');
@@ -44,48 +49,3 @@ export function GET(request: Request) {
         }
       );
 }
-
-
-// export function GET(request: Request) {
-//   listenToFirestoreChanges('lambda', (data) => {
-//     const [mayhemTimer] = data;
-//     if (mayhemTimer.id === 'mayhem-timer') {
-//       let targetDate = new Date(mayhemTimer.time)
-//       console.log(mayhemTimer, "<--- mayhemTimer")
-//       targetDate = new Date(mayhemTimer.time);
-
-//       const now = new Date();
-//       const timeLeft = targetDate.getTime() - now.getTime();
-
-
-//       const seconds = Math.floor((timeLeft / 1000) % 60);
-//       const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
-//       const padWithZero = (num: number) => String(num).padStart(2, '0');
-//       const paddedMinutes = padWithZero(minutes) ?? '00';
-//       const paddedSeconds = padWithZero(seconds) ?? '00';
-
-
-//       if (timeLeft <= 0) {
-//         return new Response(JSON.stringify({ active: false, message: "Times up!" }), {
-//           headers: { 'Content-Type': 'application/json' },
-//         });
-//       }
-
-//       console.log(`Time left: ${paddedMinutes}:${paddedSeconds}`);
-//       return new Response(
-//         JSON.stringify({ active: true, minutes: String(paddedMinutes), seconds: String(paddedSeconds), message: "Running timer" }),
-//         {
-//           headers: { 'Content-Type': 'application/json' },
-//         }
-//       );
-//     }
-//   });
-
-//   console.log("WHYYYYYYYYYYYY")
-//   return new Response(
-//       JSON.stringify({ active: false, minutes: "ff", seconds: "ff", message: "NO timer" }),
-//       {
-//         headers: { 'Content-Type': 'application/json' },
-//       }
-//     );
-// }

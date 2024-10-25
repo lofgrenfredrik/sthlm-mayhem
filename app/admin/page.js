@@ -1,45 +1,26 @@
 "use client"
 
-import { useState } from 'react';
-import {db} from '../../lib/firestore';
-import { collection, addDoc } from "firebase/firestore";
+import { useState } from "react"
+import TimerForm from "../../components/TimerForm"
+import WorkoutForm from "../../components/WorkoutForm"
+import { formatTextToHTML } from "../../lib/helpers"
 
 export default function Admin() {
-      const [value, setValue] = useState('');
-      const [time, setTime] = useState('');
+  const [workoutPreview, setWorkoutPreview] = useState("")
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const timeDate = new Date().getTime() + (time*60000);
-        try {
-            const docRef = await addDoc(collection(db, "test"), {
-                text: value,
-                time: timeDate,
-            });
-            console.log("Document written with ID: ", docRef.id);
-            setValue(''); // Clear the form
-        } catch (e) {
-            console.error("Error adding document: ", e);
-        }
-    };
   return (
-    <div className="flex justify-center items-center w-screen h-screen flex-col">
-      <h1 className="text-6xl">Admin</h1>
-              <form className="flex justify-center items-center w-full h-full flex-col text-black" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder="text"
-                />
-                <input
-                    type="text"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    placeholder="minutes"
-                />
-            <button className='bg-slate-200' type="submit">Add Item</button>
-        </form>
+    <div className="flex">
+      <div className="w-full">
+        <TimerForm />
+        <WorkoutForm handleWorkoutPreview={setWorkoutPreview} />
+      </div>
+      <div className="w-full flex flex-col justify-center items-center px-4">
+        <h2 className="text-2xl">Workout Preview</h2>
+        <div
+          className="border-2 border-gray-500 min-h-8 min-w-full p-2"
+          dangerouslySetInnerHTML={{ __html: formatTextToHTML(workoutPreview) }}
+        />
+      </div>
     </div>
   )
 }
