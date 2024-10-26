@@ -54,16 +54,16 @@ export default function Competition() {
   }, [active])
 
   return (
-    <div className="w-full flex justify-center items-center">
+    <div className="w-full flex justify-center items-center mb-5">
       {timer.countdownSeconds !== "0" ? (
-        <span className="text-[250px]">{timer.countdownSeconds}</span>
+        <span className="text-8xl lg:text-[250px]">{timer.countdownSeconds}</span>
       ) : null}
       {timer.countdownSeconds === "0" && active ? (
-        <span className="text-[250px]">
+        <span className="text-8xl lg:text-[250px]">
           {timer.minutes}:{timer.seconds}
         </span>
       ) : null}
-      {!active ? <span className="text-[150px]">DONE!</span> : null}
+      {!active ? <span className="text-7xl lg:text-[150px]">DONE!</span> : null}
     </div>
   )
 }

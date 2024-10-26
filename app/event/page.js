@@ -23,21 +23,21 @@ export default function Event() {
 
   return (
     <div className="flex justify-center items-center w-screen h-screen flex-col">
-      <div className="flex w-full justify-around py-2">
-        <div className="w-48 relative">
+      <div className="flex w-full md:justify-around py-2 flex-col items-center md:flex-row">
+        <div className="w-48 h-6 md:h-full relative">
           <Image
-            src="/images/logga-vit.png"
+            src="/images/logga-vit.svg"
             alt="sodertorn"
             layout={"fill"}
             objectFit={"contain"}
           />
         </div>
-        <h1 className="text-8xl my-6">{title}</h1>
-        <div className="w-48 relative">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl my-6">{title}</h1>
+        <div className="w-48 h-6 md:h-full relative">
           <Image src="/images/mayhem-fit.jpg" alt="mayhem" layout={"fill"} objectFit={"contain"} />
         </div>
       </div>
-      <div className="flex h-full w-full">
+      <div className="flex flex-col md:flex-row h-full w-full">
         <Workout />
         <Timer />
       </div>
