@@ -25,12 +25,7 @@ export default function Event() {
     <div className="flex justify-center items-center w-screen h-screen flex-col">
       <div className="flex w-full md:justify-around py-2 flex-col items-center md:flex-row">
         <div className="w-48 h-6 md:h-full relative">
-          <Image
-            src="/images/logga-vit.svg"
-            alt="sodertorn"
-            layout={"fill"}
-            objectFit={"contain"}
-          />
+          <Image src="/images/cf-torn.png" alt="sodertorn" layout={"fill"} objectFit={"contain"} />
         </div>
         <h1 className="text-4xl md:text-6xl lg:text-8xl my-6">{title}</h1>
         <div className="w-48 h-6 md:h-full relative">
