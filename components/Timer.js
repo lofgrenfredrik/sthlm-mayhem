@@ -43,7 +43,7 @@ export default function Competition() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetchData()
-    }, 1000)
+    }, 500)
 
     if (!active) {
       console.log("Clear Intervall")
