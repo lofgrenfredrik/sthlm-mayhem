@@ -2,21 +2,16 @@
 
 import { useEffect, useState } from "react"
 import { listenToFirestoreChanges } from "../lib/firestoreListener"
+import { getTimer } from "../lib/timer"
 
 export default function Competition() {
-  const [timer, setTimer] = useState({
+  const [timerLocal, setTimerLocal] = useState({
     countdown: "0",
     minutes: "00",
     seconds: "00",
     active: false,
   })
   const [active, setActive] = useState(false)
-
-  const fetchData = async () => {
-    const res = await fetch("/api/timer")
-    const data = await res.json()
-    setTimer(data)
-  }
 
   useEffect(() => {
     const unsubscribe = listenToFirestoreChanges("lambda", (data) => {
@@ -36,14 +31,14 @@ export default function Competition() {
   }, [])
 
   useEffect(() => {
-    console.log(timer, "<--- timer")
-    setActive(timer.active)
-  }, [timer])
+    setActive(timerLocal.active)
+  }, [timerLocal])
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetchData()
-    }, 500)
+    const intervalId = setInterval(async () => {
+      const timerData = await getTimer()
+      setTimerLocal(timerData)
+    }, 300)
 
     if (!active) {
       console.log("Clear Intervall")
@@ -55,12 +50,12 @@ export default function Competition() {
 
   return (
     <div className="w-full flex justify-center items-center mb-5">
-      {timer.countdownSeconds !== "0" ? (
-        <span className="text-8xl lg:text-[250px]">{timer.countdownSeconds}</span>
+      {timerLocal.countdownSeconds !== "0" ? (
+        <span className="text-8xl lg:text-[250px]">{timerLocal.countdownSeconds}</span>
       ) : null}
-      {timer.countdownSeconds === "0" && active ? (
+      {timerLocal.countdownSeconds === "0" && active ? (
         <span className="text-8xl lg:text-[250px]">
-          {timer.minutes}:{timer.seconds}
+          {timerLocal.minutes}:{timerLocal.seconds}
         </span>
       ) : null}
       {!active ? <span className="text-7xl lg:text-[150px]">DONE!</span> : null}
