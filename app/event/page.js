@@ -24,17 +24,17 @@ export default function Event() {
   return (
     <div className="flex justify-center items-center w-screen h-screen flex-col">
       <div className="flex w-full md:justify-around py-2 flex-col items-center md:flex-row">
-        <div className="w-48 h-6 md:h-full relative">
+        <div className="w-48 h-6 md:h-full relative hidden lg:block">
           <Image src="/images/cf-torn.png" alt="sodertorn" layout={"fill"} objectFit={"contain"} />
         </div>
         <h1 className={`${takota.className} text-4xl md:text-6xl lg:text-8xl my-6 uppercase`}>
           {title}
         </h1>
-        <div className="w-48 h-6 md:h-full relative">
+        <div className="w-48 h-6 md:h-full relative hidden md:block">
           <Image src="/images/mayhem-fit.jpg" alt="mayhem" layout={"fill"} objectFit={"contain"} />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row h-full w-full">
+      <div className="flex flex-col-reverse md:flex-row h-full w-full">
         <Workout />
         <TimerLambda />
       </div>
