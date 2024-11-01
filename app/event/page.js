@@ -1,8 +1,8 @@
 "use client"
 import Image from "next/image"
-import Timer from "../../components/Timer"
+import TimerLambda from "../../components/TimerLambda"
 import Workout from "../../components/Workout"
-
+import { takota } from "../../lib/fonts"
 import { useEffect, useState } from "react"
 import { listenToFirestoreChanges } from "../../lib/firestoreListener"
 
@@ -27,14 +27,16 @@ export default function Event() {
         <div className="w-48 h-6 md:h-full relative">
           <Image src="/images/cf-torn.png" alt="sodertorn" layout={"fill"} objectFit={"contain"} />
         </div>
-        <h1 className="text-4xl md:text-6xl lg:text-8xl my-6">{title}</h1>
+        <h1 className={`${takota.className} text-4xl md:text-6xl lg:text-8xl my-6 uppercase`}>
+          {title}
+        </h1>
         <div className="w-48 h-6 md:h-full relative">
           <Image src="/images/mayhem-fit.jpg" alt="mayhem" layout={"fill"} objectFit={"contain"} />
         </div>
       </div>
       <div className="flex flex-col md:flex-row h-full w-full">
         <Workout />
-        <Timer />
+        <TimerLambda />
       </div>
     </div>
   )

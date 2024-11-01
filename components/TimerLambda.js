@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { listenToFirestoreChanges } from "../lib/firestoreListener"
-
+import { digital7Mono } from "../lib/fonts"
 export default function Competition() {
   const [timer, setTimer] = useState({
     countdown: "0",
@@ -53,17 +53,18 @@ export default function Competition() {
   }, [active])
 
   return (
-    <div className="w-full flex justify-center items-center mb-5 flex-col">
-      <p className="text-2xl">Lambda</p>
+    <div
+      className={`${digital7Mono.className} w-full flex justify-center items-center mb-5 flex-col`}
+    >
       {timer.countdownSeconds !== "0" ? (
-        <span className="text-8xl lg:text-[250px]">{timer.countdownSeconds}</span>
+        <span className="text-8xl lg:text-[450px]">{timer.countdownSeconds}</span>
       ) : null}
       {timer.countdownSeconds === "0" && active ? (
         <span className="text-8xl lg:text-[250px]">
           {timer.minutes}:{timer.seconds}
         </span>
       ) : null}
-      {!active ? <span className="text-7xl lg:text-[150px]">DONE!</span> : null}
+      {!active ? <span className="text-7xl lg:text-[250px]">00:00</span> : null}
     </div>
   )
 }

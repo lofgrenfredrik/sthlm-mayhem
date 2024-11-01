@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic"
 import { db } from "../../../lib/firestore"
 import { doc, getDoc } from "firebase/firestore"
 
-export async function GET(request: Request) {
+export async function GET(request) {
   const now = new Date()
   let timerDate = new Date()
   let countdownDate = new Date()
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
   const timeLeft = timerDate.getTime() - now.getTime()
   const seconds = Math.floor((timeLeft / 1000) % 60)
   const minutes = Math.floor((timeLeft / (1000 * 60)) % 60)
-  const padWithZero = (num: number) => String(num).padStart(2, "0")
+  const padWithZero = (num) => String(num).padStart(2, "0")
   const paddedMinutes = padWithZero(minutes) ?? "00"
   const paddedSeconds = padWithZero(seconds) ?? "00"
 
