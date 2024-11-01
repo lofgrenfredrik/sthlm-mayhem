@@ -38,7 +38,7 @@ export default function Competition() {
     const intervalId = setInterval(async () => {
       const timerData = await getTimer()
       setTimerLocal(timerData)
-    }, 300)
+    }, 200)
 
     if (!active) {
       console.log("Clear Intervall")
