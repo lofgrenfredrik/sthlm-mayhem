@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import { listenToFirestoreChanges } from "../lib/firestoreListener"
 import { getTimer } from "../lib/timer"
+import { digital7Mono } from "../lib/fonts"
 
-export default function Competition() {
+export default function TimerLocal() {
   const [timerLocal, setTimerLocal] = useState({
     countdown: "0",
     minutes: "00",
@@ -49,17 +50,18 @@ export default function Competition() {
   }, [active])
 
   return (
-    <div className="w-full flex justify-center items-center mb-5 flex-col">
-      <p className="text-2xl">Local</p>
+    <div
+      className={`${digital7Mono.className} w-full flex justify-center items-center mb-5 flex-col`}
+    >
       {timerLocal.countdownSeconds !== "0" ? (
-        <span className="text-8xl lg:text-[250px]">{timerLocal.countdownSeconds}</span>
+        <span className="text-8xl lg:text-[550px]">{timerLocal.countdownSeconds}</span>
       ) : null}
       {timerLocal.countdownSeconds === "0" && active ? (
-        <span className="text-8xl lg:text-[250px]">
+        <span className="text-8xl lg:text-[450px]">
           {timerLocal.minutes}:{timerLocal.seconds}
         </span>
       ) : null}
-      {!active ? <span className="text-7xl lg:text-[150px]">DONE!</span> : null}
+      {!active ? <span className="text-7xl lg:text-[450px]">00:00</span> : null}
     </div>
   )
 }
