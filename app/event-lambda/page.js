@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import Timer from "../../components/Timer"
+import TimerLocal from "../../components/TimerLocal"
 import TimerLambda from "../../components/TimerLambda"
 
 import { useEffect, useState } from "react"
@@ -34,7 +34,7 @@ export default function Event() {
       </div>
       <div className="flex flex-col md:flex-row h-full w-full">
         <TimerLambda />
-        <Timer />
+        <TimerLocal />
       </div>
     </div>
   )
